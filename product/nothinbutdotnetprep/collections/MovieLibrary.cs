@@ -63,6 +63,11 @@ namespace nothinbutdotnetprep.collections
 
         MovieMatcher is_published_between(int starting_year, int ending_year)
         {
+            return delegate(Movie movie)
+                       {
+
+                           return movie.date_published.Year >= starting_year && movie.date_published.Year <= ending_year;
+                       };
 
         }
 
