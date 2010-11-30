@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using nothinbutdotnetprep.infrastructure;
+using nothinbutdotnetprep.infrastructure.filtering;
 
 namespace nothinbutdotnetprep.collections
 {
@@ -48,7 +49,7 @@ namespace nothinbutdotnetprep.collections
         public
             IEnumerable<Movie> all_movies_published_by_pixar()
         {
-            return all_movies_matching(Movie.is_published_by(ProductionStudio.Pixar));
+            return all_movies_matching(Movie.is_published_by(ProductionStudio.Pixar).matches);
         }
 
         public IEnumerable<Movie> all_movies_published_between_years(int startingYear, int endingYear)
@@ -56,9 +57,9 @@ namespace nothinbutdotnetprep.collections
             return all_movies_matching(is_published_between(startingYear, endingYear));
         }
 
-        IEnumerable<Movie> all_movies_matching(Predicate<Movie> condition)
+        IEnumerable<Movie> all_movies_matching(Predicate<Movie> condition) 
         {
-            return movies.all_items_matching(condition);
+            return movies.all_items_matching(condition.as_criteria());
         }
 
         public IEnumerable<Movie> all_movies_published_by_pixar_or_disney()

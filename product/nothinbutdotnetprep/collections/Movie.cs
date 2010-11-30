@@ -1,11 +1,10 @@
 using System;
-using System.Collections.Generic;
+using nothinbutdotnetprep.infrastructure.filtering;
 
 namespace nothinbutdotnetprep.collections
 {
-    public class Movie  : IEquatable<Movie>
+    public class Movie : IEquatable<Movie>
     {
-        int private_field;
         public string title { get; set; }
 
         public ProductionStudio production_studio { get; set; }
@@ -18,14 +17,14 @@ namespace nothinbutdotnetprep.collections
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Movie);             
+            return Equals(obj as Movie);
         }
 
         public bool Equals(Movie other)
         {
             if (other == null) return false;
 
-            return ReferenceEquals(this,other) || is_equal_to_non_null_instance_of(other);
+            return ReferenceEquals(this, other) || is_equal_to_non_null_instance_of(other);
         }
 
         bool is_equal_to_non_null_instance_of(Movie other)
@@ -33,30 +32,24 @@ namespace nothinbutdotnetprep.collections
             return other.title == this.title;
         }
 
-        public static Predicate<Movie> is_published_by_pixar_or_disney()
+        public static Criteria<Movie> is_published_by_pixar_or_disney()
         {
-            return is_published_by(new List<ProductionStudio> {ProductionStudio.Pixar, ProductionStudio.Disney});
+            return is_published_by(ProductionStudio.Pixar).or(is_published_by(ProductionStudio.Disney));
         }
 
-        public static Predicate<Movie> is_in_genre(Genre genre)
+        public static Criteria<Movie> is_in_genre(Genre genre)
         {
-            return movie => movie.genre == genre;
+            return new IsInGenre(genre);
         }
 
-        public static Predicate<Movie> is_not_published_by(ProductionStudio studio)
+        public static Criteria<Movie> is_not_published_by(ProductionStudio studio)
         {
-            return movie => movie.production_studio != studio;
+            return is_published_by(studio).not();
         }
 
-        public static Predicate<Movie> is_published_by(IList<ProductionStudio> studios)
+        public static Criteria<Movie> is_published_by(ProductionStudio studio)
         {
-            return movie => studios.Contains(movie.production_studio);
+            return new IsPublishedBy(studio);
         }
-
-        public static Predicate<Movie> is_published_by(ProductionStudio studio)
-        {
-            return is_published_by(new List<ProductionStudio> {studio});
-        }
-
     }
 }
