@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using nothinbutdotnetprep.infrastructure;
 using nothinbutdotnetprep.infrastructure.filtering;
 
 namespace nothinbutdotnetprep.collections
@@ -44,47 +43,6 @@ namespace nothinbutdotnetprep.collections
         bool already_contains(Movie movie)
         {
             return movies.Contains(movie);
-        }
-
-        public
-            IEnumerable<Movie> all_movies_published_by_pixar()
-        {
-            return all_movies_matching(Movie.is_published_by(ProductionStudio.Pixar).matches);
-        }
-
-        public IEnumerable<Movie> all_movies_published_between_years(int startingYear, int endingYear)
-        {
-            return all_movies_matching(is_published_between(startingYear, endingYear));
-        }
-
-        IEnumerable<Movie> all_movies_matching(Predicate<Movie> condition) 
-        {
-            return movies.all_items_matching(condition.as_criteria());
-        }
-
-        public IEnumerable<Movie> all_movies_published_by_pixar_or_disney()
-        {
-            return movies.all_items_matching(Movie.is_published_by_pixar_or_disney());
-        }
-
-        public IEnumerable<Movie> all_movies_published_after(int year)
-        {
-            return all_movies_matching(x => x.date_published.Year > year);
-        }
-
-        public IEnumerable<Movie> all_movies_not_published_by_pixar()
-        {
-            return all_movies_matching(x => x.production_studio != ProductionStudio.Pixar);
-        }
-
-        public IEnumerable<Movie> all_action_movies()
-        {
-            return all_movies_matching(movie => movie.genre == Genre.action);
-        }
-
-        public IEnumerable<Movie> all_kid_movies()
-        {
-            return all_movies_matching(movie => movie.genre == Genre.kids);
         }
 
         public IEnumerable<Movie> sort_all_movies_by_title_ascending
@@ -135,9 +93,8 @@ namespace nothinbutdotnetprep.collections
 
         Predicate<Movie> is_published_between(int starting_year, int ending_year)
         {
-            return movie => movie.date_published.Year >= starting_year && 
+            return movie => movie.date_published.Year >= starting_year &&
                 movie.date_published.Year <= ending_year;
         }
-
     }
 }

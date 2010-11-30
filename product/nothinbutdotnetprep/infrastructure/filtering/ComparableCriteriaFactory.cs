@@ -17,12 +17,17 @@ namespace nothinbutdotnetprep.infrastructure.filtering
 
         public Criteria<ItemToFilter> greater_than(PropertyType value)
         {
-            return new AnonymousCriteria<ItemToFilter>(x => property_accessor(x).CompareTo(value) > 0);
+            return create_using(new IsGreaterThan<PropertyType>(value));
         }
 
         public Criteria<ItemToFilter> equal_to(PropertyType value_to_equal)
         {
             return criteria_factory.equal_to(value_to_equal);
+        }
+
+        public Criteria<ItemToFilter> create_using(Criteria<PropertyType> real_criteria)
+        {
+            return criteria_factory.create_using(real_criteria);
         }
 
         public Criteria<ItemToFilter> equal_to_any(params PropertyType[] properties)
@@ -37,8 +42,7 @@ namespace nothinbutdotnetprep.infrastructure.filtering
 
         public Criteria<ItemToFilter> between(PropertyType start,PropertyType end)
         {
-            return new AnonymousCriteria<ItemToFilter>(x => property_accessor(x).CompareTo(start) >= 0 &&
-                property_accessor(x).CompareTo(end) <= 0);
+            return create_using(new IsBetween<PropertyType>(start, end));
         }
     }
 }

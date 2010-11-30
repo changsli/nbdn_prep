@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace nothinbutdotnetprep.infrastructure.filtering
 {
@@ -19,14 +18,18 @@ namespace nothinbutdotnetprep.infrastructure.filtering
 
         public Criteria<ItemToFilter> equal_to_any(params PropertyType[] properties)
         {
-            return
-                new AnonymousCriteria<ItemToFilter>(
-                    x => (properties as IList<PropertyType>).Contains(property_accessor(x)));
+            return create_using(new EqualToAny<PropertyType>(properties));
         }
 
         public Criteria<ItemToFilter> not_equal_to(PropertyType value)
         {
             return equal_to(value).not();
+        }
+
+        public Criteria<ItemToFilter> create_using(Criteria<PropertyType> real_criteria)
+        {
+            return new PropertyCriteria<ItemToFilter, PropertyType>(property_accessor,
+                                                                    real_criteria);
         }
     }
 }
