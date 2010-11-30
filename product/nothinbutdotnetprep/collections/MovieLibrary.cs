@@ -48,12 +48,7 @@ namespace nothinbutdotnetprep.collections
         public
             IEnumerable<Movie> all_movies_published_by_pixar()
         {
-            return all_movies_matching(is_published_by_pixar);
-        }
-
-        bool is_published_by_pixar(Movie movie)
-        {
-            return movie.production_studio == ProductionStudio.Pixar;
+            return all_movies_matching(Movie.is_published_by(ProductionStudio.Pixar));
         }
 
         public IEnumerable<Movie> all_movies_published_between_years(int startingYear, int endingYear)
@@ -61,73 +56,34 @@ namespace nothinbutdotnetprep.collections
             return all_movies_matching(is_published_between(startingYear, endingYear));
         }
 
-        MovieMatcher is_published_between(int starting_year, int ending_year)
+        IEnumerable<Movie> all_movies_matching(Predicate<Movie> condition)
         {
-            return delegate(Movie movie)
-                       {
-                           if(ending_year == 0)
-                           {
-                               return movie.date_published.Year >= starting_year;
-                           }
-                           return movie.date_published.Year >= starting_year && movie.date_published.Year <= ending_year;
-                       };
-
-        }
-
-        IEnumerable<Movie> all_movies_matching(MovieMatcher condition)
-        {
-            foreach (var movie in movies)
-            {
-                if (condition(movie)) yield return movie;
-            }
+            return movies.all_items_matching(condition);
         }
 
         public IEnumerable<Movie> all_movies_published_by_pixar_or_disney()
         {
-            return all_movies_matching(is_published_by_pixar_or_disney);
-        }
-
-        bool is_published_by_pixar_or_disney(Movie movie)
-        {
-            return movie.production_studio == ProductionStudio.Pixar ||
-                movie.production_studio == ProductionStudio.Disney;
+            return movies.all_items_matching(Movie.is_published_by_pixar_or_disney());
         }
 
         public IEnumerable<Movie> all_movies_published_after(int year)
         {
-
-            foreach (var movie in movies)
-            {
-                if (movie.date_published.Year > year)
-                    yield return movie;
-            }
+            return all_movies_matching(x => x.date_published.Year > year);
         }
 
         public IEnumerable<Movie> all_movies_not_published_by_pixar()
         {
-            foreach (var movie in movies)
-            {
-                if (movie.production_studio != ProductionStudio.Pixar)
-                    yield return movie;
-            }
+            return all_movies_matching(x => x.production_studio != ProductionStudio.Pixar);
         }
 
         public IEnumerable<Movie> all_action_movies()
         {
-            foreach (var movie in movies)
-            {
-                if (movie.genre == Genre.action)
-                    yield return movie;
-            }
+            return all_movies_matching(movie => movie.genre == Genre.action);
         }
 
         public IEnumerable<Movie> all_kid_movies()
         {
-            foreach (var movie in movies)
-            {
-                if (movie.genre == Genre.kids)
-                    yield return movie;
-            }
+            return all_movies_matching(movie => movie.genre == Genre.kids);
         }
 
         public IEnumerable<Movie> sort_all_movies_by_title_ascending
@@ -175,5 +131,12 @@ namespace nothinbutdotnetprep.collections
             movieList.Sort(delegate(Movie m1, Movie m2) { return m1.date_published.CompareTo(m2.date_published); });
             return movieList;
         }
+
+        Predicate<Movie> is_published_between(int starting_year, int ending_year)
+        {
+            return movie => movie.date_published.Year >= starting_year && 
+                movie.date_published.Year <= ending_year;
+        }
+
     }
 }
