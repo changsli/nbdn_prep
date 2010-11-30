@@ -223,7 +223,9 @@ namespace nothinbutdotnetprep.specs
 
             It should_be_able_to_find_all_movies_not_published_by_pixar = () =>
             {
-                var results = sut.all_movies().all_items_matching(Movie.is_not_published_by(ProductionStudio.Pixar));
+                var criteria = Where<Movie>.has_a(x => x.production_studio).not_equal_to(ProductionStudio.Pixar);
+
+                var results = sut.all_movies().all_items_matching(criteria);
                 results.ShouldNotContain(cars, a_bugs_life);
             };
 
@@ -243,14 +245,18 @@ namespace nothinbutdotnetprep.specs
 
             It should_be_able_to_find_all_kid_movies = () =>
             {
-                var results = sut.all_movies().all_items_matching(Movie.is_in_genre(Genre.kids));
+                var criteria = Where<Movie>.has_a(movie => movie.genre).equal_to(Genre.kids);
+
+                var results = sut.all_movies().all_items_matching(criteria);
 
                 results.ShouldContainOnly(a_bugs_life, shrek, cars);
             };
 
             It should_be_able_to_find_all_action_movies = () =>
             {
-                var results = sut.all_movies().all_items_matching(Movie.is_in_genre(Genre.action));
+                var criteria = Where<Movie>.has_a(movie => movie.genre).equal_to(Genre.action);
+
+                var results = sut.all_movies().all_items_matching(criteria);
 
                 results.ShouldContainOnly(indiana_jones_and_the_temple_of_doom, pirates_of_the_carribean);
             };
@@ -404,3 +410,4 @@ namespace nothinbutdotnetprep.specs
         }
     }
 }
+
