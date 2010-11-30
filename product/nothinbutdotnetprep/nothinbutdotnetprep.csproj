@@ -52,9 +52,10 @@
     <Compile Include="infrastructure\filtering\AndCriteria.cs" />
     <Compile Include="infrastructure\filtering\AnonymousCriteria.cs" />
     <Compile Include="infrastructure\filtering\BinaryCriteria.cs" />
+    <Compile Include="infrastructure\filtering\ComparableCriteriaFactory.cs" />
     <Compile Include="infrastructure\filtering\Criteria.cs" />
     <Compile Include="infrastructure\filtering\CriteriaExtensions.cs" />
-    <Compile Include="infrastructure\filtering\CriteriaFactory.cs" />
+    <Compile Include="infrastructure\filtering\DefaultCriteriaFactory.cs" />
     <Compile Include="infrastructure\filtering\EnumerableExtensions.cs" />
     <Compile Include="infrastructure\filtering\NotCriteria.cs" />
     <Compile Include="infrastructure\filtering\OrCriteria.cs" />

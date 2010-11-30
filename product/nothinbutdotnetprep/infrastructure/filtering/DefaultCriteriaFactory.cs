@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace nothinbutdotnetprep.infrastructure.filtering
 {
-    public class CriteriaFactory<ItemToFilter, PropertyType>
+    public class DefaultCriteriaFactory<ItemToFilter, PropertyType> 
     {
         Func<ItemToFilter, PropertyType> property_accessor;
 
-        public CriteriaFactory(Func<ItemToFilter, PropertyType> property_accessor)
+        public DefaultCriteriaFactory(Func<ItemToFilter, PropertyType> property_accessor)
         {
             this.property_accessor = property_accessor;
         }
