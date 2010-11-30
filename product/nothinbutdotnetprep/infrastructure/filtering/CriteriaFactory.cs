@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using nothinbutdotnetprep.collections;
 
 namespace nothinbutdotnetprep.infrastructure.filtering
 {
-    public class DefaultCriteriaFactory<ItemToFilter, PropertyType>:ICriteriaFactory<ItemToFilter,PropertyType>
+    public class CriteriaFactory<ItemToFilter, PropertyType>
     {
         Func<ItemToFilter, PropertyType> property_accessor;
 
-        public DefaultCriteriaFactory(Func<ItemToFilter, PropertyType> property_accessor)
+        public CriteriaFactory(Func<ItemToFilter, PropertyType> property_accessor)
         {
             this.property_accessor = property_accessor;
         }
@@ -29,9 +30,11 @@ namespace nothinbutdotnetprep.infrastructure.filtering
             return equal_to(value).not();
         }
 
-        public Criteria<ItemToFilter> greater_than(PropertyType value)
+        public Criteria<Movie> greater_than(int value)
         {
-            throw new NotImplementedException();
+            return
+                new AnonymousCriteria<ItemToFilter>(
+                    x => ((int)property_accessor(x)) >  value);
         }
     }
 }
