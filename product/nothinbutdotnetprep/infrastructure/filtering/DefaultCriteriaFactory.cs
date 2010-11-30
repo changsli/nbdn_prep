@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace nothinbutdotnetprep.infrastructure.filtering
 {
-    public class DefaultCriteriaFactory<ItemToFilter, PropertyType>:ICriteriaFactory<ItemToFilter,PropertyType>
+    public class DefaultCriteriaFactory<ItemToFilter, PropertyType> : CriteriaFactory<ItemToFilter, PropertyType>
     {
         Func<ItemToFilter, PropertyType> property_accessor;
 
@@ -27,11 +27,6 @@ namespace nothinbutdotnetprep.infrastructure.filtering
         public Criteria<ItemToFilter> not_equal_to(PropertyType value)
         {
             return equal_to(value).not();
-        }
-
-        public Criteria<ItemToFilter> greater_than(PropertyType value)
-        {
-            throw new NotImplementedException();
         }
     }
 }
