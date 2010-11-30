@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace nothinbutdotnetprep.collections
 {
@@ -34,8 +35,7 @@ namespace nothinbutdotnetprep.collections
 
         public static Predicate<Movie> is_published_by_pixar_or_disney()
         {
-            return movie => movie.production_studio == ProductionStudio.Pixar ||
-                movie.production_studio == ProductionStudio.Disney;
+            return is_published_by(new List<ProductionStudio> {ProductionStudio.Pixar, ProductionStudio.Disney});
         }
 
         public static Predicate<Movie> is_in_genre(Genre genre)
@@ -48,9 +48,15 @@ namespace nothinbutdotnetprep.collections
             return movie => movie.production_studio != studio;
         }
 
+        public static Predicate<Movie> is_published_by(IList<ProductionStudio> studios)
+        {
+            return movie => studios.Contains(movie.production_studio);
+        }
+
         public static Predicate<Movie> is_published_by(ProductionStudio studio)
         {
-            return movie => movie.production_studio == studio;
+            return is_published_by(new List<ProductionStudio> {studio});
         }
+
     }
 }
