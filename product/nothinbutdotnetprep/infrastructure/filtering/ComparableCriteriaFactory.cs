@@ -1,23 +1,21 @@
 using System;
+using nothinbutdotnetprep.infrastructure.ranges;
 
 namespace nothinbutdotnetprep.infrastructure.filtering
 {
     public class ComparableCriteriaFactory<ItemToFilter, PropertyType> : CriteriaFactory<ItemToFilter,PropertyType>
         where PropertyType : IComparable<PropertyType>
     {
-        Func<ItemToFilter, PropertyType> property_accessor;
         CriteriaFactory<ItemToFilter, PropertyType> criteria_factory;
 
-        public ComparableCriteriaFactory(Func<ItemToFilter, PropertyType> property_accessor,
-                                         CriteriaFactory<ItemToFilter, PropertyType> criteria_factory)
+        public ComparableCriteriaFactory(CriteriaFactory<ItemToFilter, PropertyType> criteria_factory)
         {
-            this.property_accessor = property_accessor;
             this.criteria_factory = criteria_factory;
         }
 
         public Criteria<ItemToFilter> greater_than(PropertyType value)
         {
-            return create_using(new IsGreaterThan<PropertyType>(value));
+            return create_using(new ExclusiveRangeWithNoUpperBound<PropertyType>(value).as_criteria());
         }
 
         public Criteria<ItemToFilter> equal_to(PropertyType value_to_equal)
@@ -42,7 +40,7 @@ namespace nothinbutdotnetprep.infrastructure.filtering
 
         public Criteria<ItemToFilter> between(PropertyType start,PropertyType end)
         {
-            return create_using(new IsBetween<PropertyType>(start, end));
+            return create_using(start.up_to_and_including(end).as_criteria());
         }
     }
 }

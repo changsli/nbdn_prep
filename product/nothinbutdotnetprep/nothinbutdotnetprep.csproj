@@ -57,13 +57,17 @@
     <Compile Include="infrastructure\filtering\DefaultCriteriaFactory.cs" />
     <Compile Include="infrastructure\filtering\EnumerableExtensions.cs" />
     <Compile Include="infrastructure\filtering\EqualToAny.cs" />
+    <Compile Include="infrastructure\filtering\FallsInRange.cs" />
     <Compile Include="infrastructure\filtering\ICriteriaFactory.cs" />
-    <Compile Include="infrastructure\filtering\IsBetween.cs" />
-    <Compile Include="infrastructure\filtering\IsGreaterThan.cs" />
     <Compile Include="infrastructure\filtering\NotCriteria.cs" />
     <Compile Include="infrastructure\filtering\OrCriteria.cs" />
     <Compile Include="infrastructure\filtering\PropertyCriteria.cs" />
     <Compile Include="infrastructure\filtering\Where.cs" />
+    <Compile Include="infrastructure\ranges\ExclusiveRangeWithNoLowerBound.cs" />
+    <Compile Include="infrastructure\ranges\InclusiveRange.cs" />
+    <Compile Include="infrastructure\ranges\ExclusiveRangeWithNoUpperBound.cs" />
+    <Compile Include="infrastructure\ranges\Range.cs" />
+    <Compile Include="infrastructure\ranges\RangeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
