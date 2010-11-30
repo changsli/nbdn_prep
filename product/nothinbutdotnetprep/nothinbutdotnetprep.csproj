@@ -54,8 +54,8 @@
     <Compile Include="infrastructure\filtering\BinaryCriteria.cs" />
     <Compile Include="infrastructure\filtering\Criteria.cs" />
     <Compile Include="infrastructure\filtering\CriteriaExtensions.cs" />
+    <Compile Include="infrastructure\filtering\CriteriaFactory.cs" />
     <Compile Include="infrastructure\filtering\EnumerableExtensions.cs" />
-    <Compile Include="infrastructure\filtering\FuncExtensions.cs" />
     <Compile Include="infrastructure\filtering\NotCriteria.cs" />
     <Compile Include="infrastructure\filtering\OrCriteria.cs" />
     <Compile Include="infrastructure\filtering\Where.cs" />
