@@ -65,7 +65,10 @@ namespace nothinbutdotnetprep.collections
         {
             return delegate(Movie movie)
                        {
-
+                           if(ending_year == 0)
+                           {
+                               return movie.date_published.Year >= starting_year;
+                           }
                            return movie.date_published.Year >= starting_year && movie.date_published.Year <= ending_year;
                        };
 
@@ -92,6 +95,7 @@ namespace nothinbutdotnetprep.collections
 
         public IEnumerable<Movie> all_movies_published_after(int year)
         {
+
             foreach (var movie in movies)
             {
                 if (movie.date_published.Year > year)
