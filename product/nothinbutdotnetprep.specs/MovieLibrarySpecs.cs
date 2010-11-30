@@ -6,6 +6,7 @@ using Machine.Specifications.DevelopWithPassion.Extensions;
 using Machine.Specifications.DevelopWithPassion.Rhino;
 using nothinbutdotnetprep.collections;
 using nothinbutdotnetprep.infrastructure.filtering;
+using nothinbutdotnetprep.infrastructure.sorting;
 using nothinbutdotnetprep.tests.utility;
 using nothinbutdotnetprep.infrastructure;
 
@@ -276,7 +277,7 @@ namespace nothinbutdotnetprep.specs
 
             It should_be_able_to_sort_all_movies_by_title_descending = () =>
                                                                            {
-                var criteria =Sort<Movie>.On(x => x.title).Decending();
+                var criteria = Sort<Movie>.on(x => x.title).descending();
                 
                 var results = sut.all_movies().Sort(criteria);
 
